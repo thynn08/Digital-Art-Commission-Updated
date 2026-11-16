@@ -1,0 +1,26 @@
+DIGITAL ART APPLICATION - REVIEWED PROJECT
+
+Changes made
+------------
+1. Added OrderStore.vb, which was referenced by the pending-orders form but was missing from the project. It loads the logged-in artist's pending orders and supports progress updates, completion, customer-name changes, and location changes.
+2. Added CustomerStore.vb to the VB project compile list. The pending-orders form calls PickCustomer and AddOrder from this module, but it was not included in the project file.
+3. Centralized the MySQL connection string in App.config and added DatabaseConfig.vb. Update the DigitalArtDatabase connection string to match your MySQL server credentials.
+4. Added the new source files to the VB project.
+
+Setup
+-----
+- Extract the ZIP.
+- Open Digital Art Commission.slnx in Visual Studio.
+- Make sure MySQL is running and the digicomms_data database exists.
+- Edit the DigitalArtDatabase connection string in the application's App.config. The supplied default is localhost, port 3306, user root, blank password.
+- Restore NuGet packages if Visual Studio requests it, then Build > Rebuild Solution.
+
+Database expectations for the pending-orders screen
+---------------------------------------------------
+The code expects a users table with user_id, user_name, name, surname, and location columns, and an orders table with order_id, order_number, buyer_id, artist_id, artwork_title, status, progress, last_update, location, customer_name, and order_date columns. The application also contains other database features with their own expected tables/columns. Compare these names with your actual MySQL schema before running the app.
+
+Important notes
+---------------
+- The project uses .NET Framework 4.8 and Windows Forms. This environment did not have MSBuild/.NET Framework build tools, so a full Windows compile and runtime/database test could not be performed here. The project and App.config XML were validated, and every Compile entry in the project file resolves to an existing source file.
+- The existing sign-up/login code stores and compares passwords as plain text. This is not safe for real users. Converting to password hashing requires a coordinated database migration for existing accounts, so it was not silently changed in this repair.
+- Database table/column names could not be confirmed because no SQL schema or database dump was included in the ZIP.
